@@ -5,7 +5,7 @@ import styles from './customer.module.css';
 const Customers = (props) => {
     const [customersList, setCustomersList] = useState([])
     //const baseUrl = 'http://localhost:5000'
-    const baesUrl = 'https://customersapi-cu.azurewebsites.net'
+    const baseUrl = 'https://customersapi-cu.azurewebsites.net'
     const nameRef = useRef(null);
     const typeRef = useRef(null);
     const yearRef = useRef(null);
