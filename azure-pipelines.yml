@@ -15,12 +15,12 @@ steps:
 - task: Npm@1
   inputs:
     command: 'install'
-    workingDir: '/customer-client'
+    workingDir: 'customer-client'
 - task: Npm@1
   inputs:
     command: 'custom'
     customCommand: 'run build'
-    workingDir: '/customer-client'
+    workingDir: 'customer-client'
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: 'build'
