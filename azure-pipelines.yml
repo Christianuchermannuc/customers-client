@@ -23,6 +23,6 @@ steps:
     workingDir: 'customer-client'
 - task: PublishBuildArtifacts@1
   inputs:
-    PathtoPublish: 'customer-client'
+    PathtoPublish: 'customer-client/build'
     ArtifactName: 'drop'
     publishLocation: 'Container'
