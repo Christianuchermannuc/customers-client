@@ -1,11 +1,13 @@
-import logo from './logo.svg';
 import './App.css';
-import HeaderItem from './components/header'
+import Customers from './containers/customers'
+import Layout from './hoc/Layout'
 
 function App() {
   return (
     <div>
-      <HeaderItem></HeaderItem>
+      <Layout>
+        <Customers></Customers>
+      </Layout>
     </div>
   );
 }
