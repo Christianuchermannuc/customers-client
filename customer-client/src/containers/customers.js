@@ -12,22 +12,29 @@ const Customers = (props) => {
         );
         console.log('her er customers: ', result.data)
         setCustomersList(result.data);
-      console.log('customers: ',customersList )  
+        console.log('customers: ', customersList)
     }, [])
 
     useEffect(() => {
         getCustomers()
     }, [getCustomers]);
 
+    const removeCustomerHandler = (id) => {
+        console.log('Trykket på id: ', id)
+        const newCustomerList = customersList.filter((item) => item.id !== id)
+        setCustomersList(newCustomerList)
+    }
+
     const renderTableData = () => {
         return customersList.map((customer, index) => {
-            const { id, year, numberOfOwners, type } = customer //destructuring
+            const { id, year, numberOfOwners, type } = customer
             return (
                 <tr key={id}>
                     <td>{id}</td>
                     <td>{year}</td>
                     <td>{numberOfOwners}</td>
                     <td>{type}</td>
+                    <td> <button onClick={() => removeCustomerHandler(id)} >Remove customer</button></td>
                 </tr>
             )
         })
@@ -39,9 +46,16 @@ const Customers = (props) => {
                 Main Contenet
             </h1>
             <table id='customersId' className={styles}>
-               <tbody>
-                 {renderTableData()}
-               </tbody>
+                <tbody>
+                    <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Year</th>
+                    <th>Owners</th>
+                    <th>Share Capital</th>
+                    </tr>
+                    {renderTableData()}
+                </tbody>
             </table>
         </>
     )
