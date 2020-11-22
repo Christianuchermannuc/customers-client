@@ -4,6 +4,23 @@ import styles from './customer.module.css';
 
 const Customers = (props) => {
     const [customersList, setCustomersList] = useState([])
+    const selectTypeOptions = [
+        {
+            id: 1,
+            typeName: 'Limited liability company'
+        },
+        {
+            id: 2,
+            typeName: 'Sole proprietorship'
+        },
+        {
+            id: 3,
+            typeName: 'General partnership'
+        }
+    ]
+
+    const [selectedType, setSelectedType] = useState(selectTypeOptions[0].typeName)
+
     //const baseUrl = 'http://localhost:5000'
     const baseUrl = 'https://customersapi-cu.azurewebsites.net'
     const nameRef = useRef(null);
@@ -39,21 +56,30 @@ const Customers = (props) => {
     const addCustomerHandler = async () => {
         console.log('Added customer, name: ', nameRef.current.value)
 
-        var newCustomer2 = {
-            name: nameRef.current.value,
-            type: typeRef.current.value,
-            year: yearRef.current.value,
-            numberOfOwners: numberOfOwnersRef.current.value,
-            shareCapital: shareCapRef.current.value
+        const year = parseInt(yearRef.current.value)
+        let shareCapital = parseInt(shareCapRef.current.value)
+        const numberOfOwners = parseInt(numberOfOwnersRef.current.value)
+        if (isNaN(shareCapital)) {
+            shareCapital = 0
         }
+
         var newCustomer = {
-            name: 'dedede'
+            name: nameRef.current.value,
+            type: selectedType,
+            year: year,
+            numberOfOwners: numberOfOwners,
+            shareCapital: shareCapital
         }
+
         try {
             const respons = await axios.post(`${baseUrl}/api/customers`, newCustomer)
             console.log('Added customer new: ', respons.data)
             const newList = customersList.concat(respons.data)
             setCustomersList(newList)
+            nameRef.current.value = ''
+            yearRef.current.value = ''
+            shareCapRef.current.value = ''
+            numberOfOwnersRef.current.value = ''
         } catch (err) {
             const error = err;
             console.log('Fanget error ', error.response.data)
@@ -100,16 +126,19 @@ const Customers = (props) => {
             <input ref={nameRef} ></input>
             <br></br>
             <label >Type</label>
-            <input ref={typeRef} ></input>
+            <select onChange={(e) => setSelectedType(e.target.value)} >
+                {selectTypeOptions.map((type) => <option key={type.id} value={type.typeName}>{type.typeName}</option>)}
+            </select>
             <br></br>
             <label >Year</label>
-            <input ref={yearRef} ></input>
+            <input type="number" ref={yearRef} ></input>
             <br></br>
             <label >Owners</label>
-            <input ref={numberOfOwnersRef} ></input>
+            <input type="number" ref={numberOfOwnersRef} ></input>
+
             <br></br>
             <label >Share Capital</label>
-            <input ref={shareCapRef} ></input>
+            <input type="number" ref={shareCapRef} ></input>
             <br></br>
             <button onClick={() => addCustomerHandler()} >Add customer</button>
         </>
