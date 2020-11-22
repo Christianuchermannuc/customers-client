@@ -4,6 +4,7 @@ import styles from './customer.module.css';
 
 const Customers = (props) => {
     const [customersList, setCustomersList] = useState([])
+    const [errorMessage, setErrorMessage] = useState('')
     const selectTypeOptions = [
         {
             id: 1,
@@ -80,9 +81,11 @@ const Customers = (props) => {
             yearRef.current.value = ''
             shareCapRef.current.value = ''
             numberOfOwnersRef.current.value = ''
+            setErrorMessage('')
         } catch (err) {
             const error = err;
             console.log('Fanget error ', error.response.data)
+            setErrorMessage(error.response.data)
         }
     }
 
@@ -100,6 +103,11 @@ const Customers = (props) => {
                 </tr>
             )
         })
+    }
+
+    let showErrorMessage = '';
+    if (!errorMessage) {
+        showErrorMessage = <p style={{ color: "red" }}>{errorMessage}</p>
     }
 
     return (
@@ -121,6 +129,8 @@ const Customers = (props) => {
             </table>
             <br></br>
             <h2 >New customer</h2>
+            {showErrorMessage}
+            <p style={{ color: "red" }}>{errorMessage}</p>
             <br></br>
             <label >Name</label>
             <input ref={nameRef} ></input>
