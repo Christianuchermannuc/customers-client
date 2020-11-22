@@ -6,3 +6,16 @@ td, th {
 .redColor{
     color: red;
   }
+
+
+  label {
+    width:180px;
+    clear:left;
+    text-align:left;
+    padding-right:10px;
+}
+
+input, label {
+    float:left;
+  
+}

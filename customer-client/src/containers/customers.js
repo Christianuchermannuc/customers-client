@@ -64,6 +64,10 @@ const Customers = (props) => {
             shareCapital = 0
         }
 
+        if (isNaN(year)) {
+            year = 2020
+        }
+
         var newCustomer = {
             name: nameRef.current.value,
             type: selectedType,
@@ -99,7 +103,7 @@ const Customers = (props) => {
                     <td>{year}</td>
                     <td>{numberOfOwners}</td>
                     <td>{shareCapital}</td>
-                    <td> <button onClick={() => removeCustomerHandler(id)} >Remove customer</button></td>
+                    <td> <button onClick={() => removeCustomerHandler(id)} >Delete</button></td>
                 </tr>
             )
         })
@@ -111,10 +115,7 @@ const Customers = (props) => {
     }
 
     return (
-        <>
-            <h1>
-                Main Contenet
-            </h1>
+        <>            
             <table id='customersId' className={styles}>
                 <tbody>
                     <tr>
@@ -123,6 +124,7 @@ const Customers = (props) => {
                         <th>Year</th>
                         <th>Owners</th>
                         <th>Share Capital</th>
+                        <th></th>
                     </tr>
                     {renderTableData()}
                 </tbody>
@@ -132,23 +134,24 @@ const Customers = (props) => {
             {showErrorMessage}
             <p style={{ color: "red" }}>{errorMessage}</p>
             <br></br>
-            <label >Name</label>
+            <label >Name: </label>
             <input ref={nameRef} ></input>
             <br></br>
-            <label >Type</label>
+            <label >Type: </label>
             <select onChange={(e) => setSelectedType(e.target.value)} >
                 {selectTypeOptions.map((type) => <option key={type.id} value={type.typeName}>{type.typeName}</option>)}
             </select>
             <br></br>
-            <label >Year</label>
+            <label >Year: </label>
             <input type="number" ref={yearRef} ></input>
             <br></br>
-            <label >Owners</label>
+            <label >Owners: </label>
             <input type="number" ref={numberOfOwnersRef} ></input>
 
             <br></br>
-            <label >Share Capital</label>
+            <label >Share Capital: </label>
             <input type="number" ref={shareCapRef} ></input>
+            <br></br>
             <br></br>
             <button onClick={() => addCustomerHandler()} >Add customer</button>
         </>
